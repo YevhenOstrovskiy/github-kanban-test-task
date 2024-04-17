@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Issue } from '../../types/Issue';
 import { getIssues } from '../../api/issues';
+import { CategoryE } from '../../types/Category';
 
 interface IssuesState {
   issues: Issue[];
@@ -15,9 +16,11 @@ type FetchIssuesArgs = {
 };
 
 export const fetchIssues = createAsyncThunk('issues/fetch', async ({ url }: FetchIssuesArgs) => {
-    const response = await getIssues(url);
+    const response: Issue[] = await getIssues(url);
 
-    return response
+    return response.map( issue => {
+      return {...issue, status: CategoryE.todo}
+    });
 });
 
 export const issuesSlice = createSlice({

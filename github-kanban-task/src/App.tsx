@@ -1,15 +1,12 @@
-import { useState } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import InputForm from './components/InputForm/InputForm';
-import { useAppSelector } from '../src/redux/hooks';
-import IssueSection from './components/IssueSection/IssueSection';
+import Board from './components/Board/Board';
+import Breadcrumbs from './components/Breadcrumbs/Breadcrumbs';
 
 function App() {
-  const [count, setCount] = useState(0);
-  const issues = useAppSelector((state) => state.issues.issues);
 
   return (
     <>
@@ -23,11 +20,9 @@ function App() {
       </div>
       <h1>Kanban todo</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
         <InputForm />
-        <IssueSection issues={issues}/>
+        <Breadcrumbs />
+        <Board />
         <p>
           Edit <code>https://github.com/mate-academy/node_copy-files</code>
         </p>
