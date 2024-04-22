@@ -1,7 +1,4 @@
-import { parseGitHubUrl } from '../services/parceGitHubUrl';
-
-export async function getIssues(baseUrl: string) {
-  const { owner, repo } = parseGitHubUrl(baseUrl);
+export async function getIssues(owner: string, repo: string) {
 
   // URL API GitHub для отримання issues
   const url = `https://api.github.com/repos/${owner}/${repo}/issues`;
@@ -20,8 +17,3 @@ export async function getIssues(baseUrl: string) {
     return [];
   }
 }
-
-
-// getIssues(baseUrl).then(issues => {
-//   console.log('List of issues:', issues);
-// });

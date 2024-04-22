@@ -3,6 +3,8 @@ import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { fetchIssues } from '../../redux/slices/issuesSlice';
+import { parseGitHubUrl } from '../../services/parceGitHubUrl';
+import { setRepoInfo } from '../../redux/slices/repoInfoSlice';
 
 function InputForm() {
   const [inputValue, setInputValue] = useState('');
@@ -24,7 +26,8 @@ function InputForm() {
   };
 
   const handleClick = () => {
-
+    const { owner, repo } = parseGitHubUrl(inputValue);
+    dispatch(setRepoInfo({ owner, repo }));
     handleFetchIssues()
     setInputValue('');
   };

@@ -2,14 +2,40 @@ import React from 'react';
 import { Card } from 'react-bootstrap';
 import { Issue } from '../../types/Issue';
 import { formatDate } from '../../services/formatDate';
+import { useDrag } from 'react-dnd';
+import { ItemTypes } from '../../types/ItemTypes';
 
 type Props = {
   issue: Issue;
 };
 
+// const ItemTypes = {
+//   ISSUE: 'issue',
+// };
+
 const IssueCard: React.FC<Props> = ({ issue }) => {
+  const [{ isDragging }, drag] = useDrag({
+    type: ItemTypes.ISSUE,
+    item: {id: issue.id},
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  });
+
+  console.log(isDragging);
+
   return (
-    <Card draggable={true}>
+      <Card
+        ref={drag}
+        style={{
+        opacity: isDragging ? 0.25 : 1,
+        cursor: 'pointer',
+        border: isDragging ? '1px solid #ccc' : '2px solid #ccc',
+        marginBottom: '8px',
+        padding: '8px',
+        backgroundColor: 'white',
+        }}
+      >
       <Card.Body>
         <Card.Title>{issue.title}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">

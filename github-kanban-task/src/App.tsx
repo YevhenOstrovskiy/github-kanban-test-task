@@ -5,11 +5,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import InputForm from './components/InputForm/InputForm';
 import Board from './components/Board/Board';
 import Breadcrumbs from './components/Breadcrumbs/Breadcrumbs';
+import { useAppSelector } from './redux/hooks';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
 
 function App() {
+  const owner = useAppSelector(state => state.repoInfo.owner);
+  const repo = useAppSelector(state => state.repoInfo.repo);
 
   return (
     <>
+        <DndProvider backend={HTML5Backend}>
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -21,7 +27,7 @@ function App() {
       <h1>Kanban todo</h1>
       <div className="card">
         <InputForm />
-        <Breadcrumbs />
+        {!!owner && !!repo && (<Breadcrumbs />)}
         <Board />
         <p>
           Edit <code>https://github.com/mate-academy/node_copy-files</code>
@@ -30,6 +36,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      </DndProvider>
     </>
   );
 }
